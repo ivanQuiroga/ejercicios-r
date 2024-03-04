@@ -1,18 +1,23 @@
 library(stats)
 
-# Definir los parámetros del proceso MA
-cantidad_datos <- 1000  
-desviacion_estandar <- 1
+datos <- 1000
+desviacion_estandar <- 1  
 
-# Ruido blanco con media cero y varianza desviacion_estandar^2
+# Ruido blanco con media cero
 set.seed(123)
-ruido_blanco <- rnorm(cantidad_datos, mean=0, sd=desviacion_estandar)
+ruido_blanco <- rnorm(datos, mean=0, sd=desviacion_estandar)
 
-# Serie temporal
-# serie_temporal = ruido_en_t_menos_1 + 2 * ruido_en_t + ruido_en_t_mas_1
-ruido_con_ceros <- c(0, ruido_blanco, 0)
-serie_temporal <- ruido_con_ceros[1:(cantidad_datos)] + 2 * ruido_blanco + ruido_con_ceros[3:(cantidad_datos+2)]
+# Proceso MA 
+# x_t = ruido_blanco_{t-1} + 2 * ruido_blanco_t + ruido_blanco_{t+1}
+# Vectores para ruido_blanco_{t-1} y ruido_blanco_{t+1}
+ruido_blanco_retrasado <- c(0, ruido_blanco[-datos])  # ruido_blanco_{t-1}
+ruido_blanco_avanzado <- c(ruido_blanco[-1], 0)       # ruido_blanco_{t+1}
 
-# Grafica
-acf_serie_temporal <- acf(serie_temporal, type="covariance", plot=TRUE, lag.max=20)
-acf(serie_temporal, type="correlation", plot=TRUE, lag.max=20)
+serie_temporal <- ruido_blanco_retrasado + 2 * ruido_blanco + ruido_blanco_avanzado
+
+# Graficas
+acf(serie_temporal, type="covariance", plot=TRUE, lag.max=20, 
+    main="Función de Autocovarianza", xlab="Lag", ylab="Autocovarianza")
+
+acf(serie_temporal, type="correlation", plot=TRUE, lag.max=20, 
+    main="Función de Autocorrelación (ACF)", xlab="Lag", ylab="Autocorrelación")
