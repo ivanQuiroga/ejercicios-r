@@ -8,7 +8,14 @@ ruido <- rnorm(200, mean = 0, sd = 1)
 serie_temporal <- signal + ruido
 
 media <- mean(serie_temporal)
-covarianza <- Acf(serie_temporal, plot=FALSE)
+covarianza <- Acf(serie_temporal, type="covariance", plot=FALSE)
+lag_0 <- covarianza$acf[1]
+varianza <-  sum((serie_temporal - mean(serie_temporal))^2) / length(serie_temporal)
+
+#Valores
+media
+varianza
+lag_0
 
 # Grafica serie temporal
 plot(tiempo, serie_temporal, type="l", main="Serie Temporal (b) con Media", xlab="Tiempo", ylab="Serie Temporal")
