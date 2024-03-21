@@ -16,8 +16,6 @@ ruido_blanco_avanzado <- c(ruido_blanco[-1], 0)       # ruido_blanco_{t+1}
 serie_temporal <- ruido_blanco_retrasado + 2 * ruido_blanco + ruido_blanco_avanzado
 
 # Graficas
-acf(serie_temporal, type="covariance", plot=TRUE, lag.max=20, 
-    main="Función de Autocovarianza", xlab="Lag", ylab="Autocovarianza")
+acf(serie_temporal, type="covariance", plot=TRUE, lag.max=20, main="Función de Autocovarianza", xlab="Lag", ylab="Autocovarianza")
 
-acf(serie_temporal, type="correlation", plot=TRUE, lag.max=20, 
-    main="Función de Autocorrelación (ACF)", xlab="Lag", ylab="Autocorrelación")
+acf(serie_temporal, type="correlation", plot=TRUE, lag.max=20, main="Función de Autocorrelación (ACF)", xlab="Lag", ylab="Autocorrelación")
